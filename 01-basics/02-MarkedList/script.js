@@ -1,7 +1,6 @@
-// import Vue from './vendor/vue.esm.browser.js';
+import Vue from './vendor/vue.esm.browser.js';
 
 // From https://jsonplaceholder.typicode.com/comments
-/*
 const emails = [
   'Eliseo@gardner.biz',
   'Jayne_Kuhic@sydney.com',
@@ -29,6 +28,22 @@ const emails = [
   'Jeffery@juwan.us',
   'Isaias_Kuhic@jarrett.net',
 ];
-*/
 
-// new Vue();
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      emails,
+      pattern: '',
+    }
+  },
+  computed: {
+    markedEmails() {
+      const regex = new RegExp(this.pattern, 'i');
+      return this.emails.map(elem => {
+        const isMarked = this.pattern ? elem.match(regex) : false;
+        return {name: elem, marked: isMarked};
+      });
+    },
+  },
+});
