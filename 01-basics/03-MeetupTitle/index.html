@@ -6,8 +6,15 @@
 </head>
 <body>
 
-<!-- Решение -->
-
+<div id="app">
+  <p>
+    <template v-for="n in meetupsCount">
+      <input type="radio" v-model="meetupId" :value="n">
+      <label>{{ n }}</label>
+    </template>
+  </p>
+  <h1>{{ meetup.title }}</h1> 
+</div>
 <script type="module" src="script.js"></script>
 </body>
 </html>
