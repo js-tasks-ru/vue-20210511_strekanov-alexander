@@ -1,7 +1,7 @@
 import Vue from './vendor/vue.esm.browser.js';
 
 /** URL адрес API */
-const API_URL = 'https://course-vue.javascript.ru/api';
+const API_URL = 'https://course-vue.javascript.ru/api';  
 
 /** ID митапа для примера; используйте его при получении митапа */
 const MEETUP_ID = 6;
@@ -44,4 +44,52 @@ const agendaItemIcons = {
   other: 'cal-sm',
 };
 
-// Требуется создать Vue приложение
+const app = new Vue({
+  data() {
+    return {
+      url: API_URL,
+      meetupId: MEETUP_ID,
+      meetup: null,
+    }
+  },
+  methods: {
+    fetchMeetup(id) {
+      return fetch(`${this.url}/meetups/${id}`).then(response => response.json());
+    },
+    setMeetup() {
+      this.fetchMeetup(this.meetupId).then(meetup => {
+        this.meetup = meetup;
+      });
+    },
+    agendaDefaultTitle(type) {
+      return agendaItemDefaultTitles[type];
+    },
+    agendaIcon(type) {
+      return `/assets/icons/icon-${agendaItemIcons[type]}.svg`;
+    },
+  },
+  computed: {
+    meetupDate() {
+      const options = {
+        year: 'numeric',
+	      month: 'short',
+	      day: 'numeric',
+	      timezone: 'UTC',
+      };
+      return new Date(this.meetup.date).toLocaleDateString('ru', options);
+    },
+    meetupImage() {
+      const image = getImageUrlByImageId(this.meetup.imageId);
+      return {
+        background: `url(${image})`, 
+        'background-position': 'center'
+      };
+    },
+  },
+  mounted() {
+    this.setMeetup();
+  },
+  template: '#app',
+});
+
+app.$mount('#app');
