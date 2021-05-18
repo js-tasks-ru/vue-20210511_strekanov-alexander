@@ -12,24 +12,11 @@ export default {
     prop: 'count',
     event: 'increment',
   },
-  data() {
-    return {
-      counter: 0
-    }
-  },
-  mounted() {
-    this.counter = !this.count ? 0 : this.count;
-  },
-  methods: {
-    inc() {
-      return this.counter += 1;
-    }
-  },
   // Шаблон лучше держать максимально простым, а логику выносить в методы
   // Шаблон потребуется отредактировать
   template: `
     <button type="button" 
       :count="count" 
-      @click="$emit('increment', inc())"
+      @click="$emit('increment', count + 1)"
     >{{ count }}</button>`,
 };
