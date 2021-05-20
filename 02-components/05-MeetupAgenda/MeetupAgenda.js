@@ -17,8 +17,8 @@ export default {
   template: `
     <div class="meetup-agenda" :agenda="agenda">
       <meetup-agenda-item 
+        v-for="(agendaItem, index) in agenda"  
         :agenda-item="agendaItem" 
-        v-for="(agendaItem, index) in agenda"
         :key="index"
       ></meetup-agenda-item>  
     </div>`,
