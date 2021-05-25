@@ -41,9 +41,6 @@
     },
 
     methods: {
-      removeToast() {
-        this.$emit('remove', this.toasts.shift(0));
-      }, 
       updateCounter() {
         this.counter += 1;
       }
