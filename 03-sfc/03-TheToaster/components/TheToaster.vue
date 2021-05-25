@@ -1,36 +1,49 @@
 <template>
   <div class="toasts">
-    <div class="toast toast_success">
-      <app-icon icon="check-circle" />
-      <span>Success 1</span>
-    </div>
-    <div class="toast toast_success">
-      <app-icon icon="check-circle" />
-      <span>Success 2</span>
-    </div>
-    <!-- ... -->
-    <div class="toast toast_error">
-      <app-icon icon="alert-circle" />
-      <span>Error 1</span>
-    </div>
+    <div v-for="(toast, index) in toasts" :key="index">
+      <the-toast :toasts="toasts" :toast="toast" :delay="delay"></the-toast>
+    </div>  
   </div>
 </template>
 
 <script>
-import AppIcon from './AppIcon';
+import TheToast from './TheToast';
 
 const DELAY = 5000;
 
 export default {
   name: 'TheToaster',
 
-  components: { AppIcon },
+  components: {
+    TheToast,
+  },
+
+  data() {
+    return {
+      toasts: [],
+      delay: DELAY,
+    }
+  },
 
   methods: {
-    error(message) {},
+    error(message) {
+      this.toasts.push({ 
+        message: message, 
+        kind: 'toast_error', 
+        timestamp: new Date()
+      });
+    },
 
-    success(message) {},
+    success(message) {
+      this.toasts.push({ 
+        message: message, 
+        kind: 'toast_success', 
+        timestamp: new Date()
+      });
+    },
+
   },
+
 };
 </script>
 
@@ -67,15 +80,12 @@ export default {
 .toast > .icon {
   margin-right: 12px;
 }
-
 .toast.toast_success {
   color: var(--green);
 }
-
 .toast.toast_error {
   color: var(--red);
 }
-
 @media all and (min-width: 992px) {
   .toasts {
     bottom: 72px;
