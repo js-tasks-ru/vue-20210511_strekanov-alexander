@@ -1,40 +1,48 @@
 <template>
   <div class="toasts">
-    <div class="toast toast_success">
-      <app-icon icon="check-circle" />
-      <span>Success 1</span>
-    </div>
-    <div class="toast toast_success">
-      <app-icon icon="check-circle" />
-      <span>Success 2</span>
-    </div>
-    <!-- ... -->
-    <div class="toast toast_error">
-      <app-icon icon="alert-circle" />
-      <span>Error 1</span>
-    </div>
+    <the-toasts :toasts="toasts"></the-toasts>
   </div>
 </template>
 
 <script>
-import AppIcon from './AppIcon';
+
+import TheToasts from './TheToasts'
 
 const DELAY = 5000;
 
 export default {
-  name: 'TheToaster',
 
-  components: { AppIcon },
+  name: 'TheToaster',
+  
+  components: { TheToasts },
+  
+  data() {
+    return {
+      toasts: [],
+    }
+  },
 
   methods: {
-    error(message) {},
+    error(message) {
+      this.toasts.push({ title: message, kind: 'toast_error' });
+      setTimeout(this.remove, DELAY);
+    },
+    
+    success(message) {
+      this.toasts.push({ title: message, kind: 'toast_success' });
+      setTimeout(this.remove, DELAY);
+    },
 
-    success(message) {},
+    remove() {
+      this.toasts = this.toasts.filter((_, index) => index > 0);
+    }
+
   },
+
 };
 </script>
 
-<style scoped>
+<style>
 .toasts {
   position: fixed;
   bottom: 8px;
@@ -45,7 +53,6 @@ export default {
   white-space: pre-wrap;
   z-index: 999;
 }
-
 .toast {
   display: flex;
   flex: 0 0 auto;
@@ -59,23 +66,18 @@ export default {
   line-height: 28px;
   width: auto;
 }
-
 .toast + .toast {
   margin-top: 20px;
 }
-
 .toast > .icon {
   margin-right: 12px;
 }
-
 .toast.toast_success {
   color: var(--green);
 }
-
 .toast.toast_error {
   color: var(--red);
 }
-
 @media all and (min-width: 992px) {
   .toasts {
     bottom: 72px;
