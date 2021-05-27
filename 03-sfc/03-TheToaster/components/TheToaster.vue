@@ -1,53 +1,48 @@
 <template>
   <div class="toasts">
-    <div v-for="(toast, index) in toasts" :key="index">
-      <the-toast :toasts="toasts" :toast="toast" :delay="delay"></the-toast>
-    </div>  
+    <the-toasts :toasts="toasts"></the-toasts>
   </div>
 </template>
 
 <script>
-import TheToast from './TheToast';
+
+import TheToasts from './TheToasts'
 
 const DELAY = 5000;
 
 export default {
+
   name: 'TheToaster',
-
-  components: {
-    TheToast,
-  },
-
+  
+  components: { TheToasts },
+  
   data() {
     return {
       toasts: [],
-      delay: DELAY,
     }
   },
 
   methods: {
     error(message) {
-      this.toasts.push({ 
-        message: message, 
-        kind: 'toast_error', 
-        timestamp: new Date()
-      });
+      this.toasts.push({ title: message, kind: 'toast_error' });
+      setTimeout(this.remove, DELAY);
+    },
+    
+    success(message) {
+      this.toasts.push({ title: message, kind: 'toast_success' });
+      setTimeout(this.remove, DELAY);
     },
 
-    success(message) {
-      this.toasts.push({ 
-        message: message, 
-        kind: 'toast_success', 
-        timestamp: new Date()
-      });
-    },
+    remove() {
+      this.toasts = this.toasts.filter((_, index) => index > 0);
+    }
 
   },
 
 };
 </script>
 
-<style scoped>
+<style>
 .toasts {
   position: fixed;
   bottom: 8px;
@@ -58,7 +53,6 @@ export default {
   white-space: pre-wrap;
   z-index: 999;
 }
-
 .toast {
   display: flex;
   flex: 0 0 auto;
@@ -72,11 +66,9 @@ export default {
   line-height: 28px;
   width: auto;
 }
-
 .toast + .toast {
   margin-top: 20px;
 }
-
 .toast > .icon {
   margin-right: 12px;
 }
