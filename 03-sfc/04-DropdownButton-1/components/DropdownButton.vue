@@ -70,13 +70,8 @@ export default {
       return option.hasOwnProperty('icon') ? option.icon : null; 
     },
     isIcon() {
-      let result = false;
-      this.options.forEach(elem => {
-        result = elem.hasOwnProperty('icon') ? true : false; 
-      });
-      return result;
+      return this.options.some(elem => elem.hasOwnProperty('icon'));
     },
-
   },
 };
 </script>
