@@ -1,4 +1,15 @@
-<template></template>
+<template>
+  <header class="header">
+      <h1>
+        <router-link to="/"><img src="img/logo.svg" alt="Meetups" /></router-link>
+      </h1>
+      <nav>
+        <router-link to="/">Митапы</router-link>
+        <router-link to="/login">Вход</router-link>
+        <router-link to="/form">Создать митап</router-link>
+      </nav>
+    </header>
+</template>
 
 <script>
 export default {
