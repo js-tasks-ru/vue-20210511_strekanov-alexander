@@ -46,4 +46,22 @@ export const router = new VueRouter({
       ],
     },
   ],
+
+  scrollBehavior(to, from, savedPosition) {
+    
+    if (to.hash) {
+      return { selector: to.hash };
+    }
+
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    const isMetaSaveTo = to.matched.some(el => el.meta.saveScrollPosition);
+    const isMetaSaveFrom = from.matched.some(el => el.meta.saveScrollPosition);
+
+    return isMetaSaveTo && isMetaSaveFrom ? false : { x: 0, y: 0 };
+
+  }
+
 });
