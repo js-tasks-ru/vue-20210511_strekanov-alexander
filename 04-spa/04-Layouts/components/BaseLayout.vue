@@ -1,7 +1,9 @@
 <template>
   <div>
     <the-header></the-header>
-    <slot/>
+    <main class="main">
+      <slot/>
+    </main>  
     <the-footer></the-footer>
   </div>  
 </template>
