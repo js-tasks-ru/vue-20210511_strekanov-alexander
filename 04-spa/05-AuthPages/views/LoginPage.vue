@@ -53,7 +53,6 @@ export default {
         login(this.email, this.password)
         .then((data) => obj = data)
         .then(() => {
-          console.log(obj);
           if (obj.statusCode == 403) {
             alert(obj.message);
           } else {
