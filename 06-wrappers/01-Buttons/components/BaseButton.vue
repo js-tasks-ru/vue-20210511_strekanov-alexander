@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="button" :class="{ button_block: block }" v-bind="$attrs" v-on="$listeners">
+  <component :is="tag" v-on="$listeners" :class="addClasses" v-bind="$attrs">
     <slot />
   </component>
 </template>
@@ -7,14 +7,28 @@
 <script>
 export default {
   name: 'BaseButton',
-  inheritAttrs: false,
-
+  
   props: {
+    block: {
+      type: Boolean,
+      default: false,
+    },
     tag: {
+      type: [String, Object],
       default: 'button',
     },
-
-    block: Boolean,
+  },
+  methods: {
+    click() {
+      this.$emit('click');
+    }, 
+  },
+  computed: {
+    addClasses() {
+      return {
+        'button_block': this.block,
+      }
+    },
   },
 };
 </script>
