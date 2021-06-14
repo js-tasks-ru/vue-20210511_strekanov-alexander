@@ -9,9 +9,13 @@ import BaseButton from './BaseButton';
 
 export default {
   name: 'DangerButton',
+  
   components: {
     BaseButton,
   },
+
+  inheritAttrs: false,
+
 };
 </script>
 

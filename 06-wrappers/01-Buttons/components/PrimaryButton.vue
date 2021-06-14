@@ -12,6 +12,9 @@ export default {
   components: {
     BaseButton,
   },
+
+  inheritAttrs: false,
+
 };
 </script>
 
